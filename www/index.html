@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" ng-app>
+<head>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <title> Comment </title>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <nav>
+        <ul class="nav nav-pills pull-right">
+          <li role="presentation" class="active"><a href="#">Home</a></li>
+          <li role="presentation"><a href="#">My Content</a></li>
+          <li role="presentation"><a href="#">About</a></li>
+        </ul>
+      </nav>
+      <h3 class="text-muted">Comment</h3>
+    </div>
+      
+    <form class="row search-bar">
+      <div class="form-group col-lg-12">
+        <label class="sr-only" for="contentSearchText">Search content</label>
+        <div class="input-group">
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">All <span class="caret"></span></button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Books</a></li>
+              <li><a href="#">Movies</a></li>
+              <li><a href="#">Music</a></li>
+            </ul>
+          </div>      
+          <input type="text" id="contentSearchText" class="form-control" placeholder="Search" aria-describedby="helpBlock">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Search</button>
+          </span>
+        </div>
+        <span id="helpBlock" class="help-block"><small>Search Books, Movies etc, OR <a href="#">Create custom content</a></small></span>
+
+      </div>
+    </form>
+
+    <div class="row results">
+      <h4>Subheading</h4>
+      <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+
+      <h4>Subheading</h4>
+      <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+
+      <h4>Subheading</h4>
+      <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+
+    </div>
+
+    <footer class="footer">
+      <p>&copy; Company 2014</p>
+    </footer>
+
+  </div> <!-- /container -->
+      
+  <!-- scripts -->
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <!--<script src="scripts/app.js">-->
+ </body>
+</html>
