@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app>
+<html lang="en" ng-app="commentApp">
 <head>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,8 @@
 <body>
   <div class="container">
     <div class="header">
-      <nav>
+      <div class="pull-right"><login-info /></div>
+      <nav style="clear:right">
         <ul class="nav nav-pills pull-right">
           <li role="presentation" class="active"><a href="#">Home</a></li>
           <li role="presentation"><a href="#">My Content</a></li>
@@ -65,6 +66,11 @@
   <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <script src="bower_components/angular/angular.js"></script>
-  <!--<script src="scripts/app.js">-->
+  <script src="https://apis.google.com/js/client:platform.js"></script>
+  
+  <!-- local scripts -->
+  <script src="scripts/services/main.js"></script>
+  <script src="scripts/directives/main.js"></script>
+  <script src="scripts/app.js"></script>
  </body>
 </html>
