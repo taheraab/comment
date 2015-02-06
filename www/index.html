@@ -21,9 +21,9 @@
       </nav>
       <h3 class="text-muted">Comment</h3>
     </div>
-      
-    <form class="row search-bar">
-      <div class="form-group col-lg-12">
+    <div ng-controller="searchController">  
+    <form class="row search-bar" ng-submit="searchContent()" >
+      <div class="form-group col-lg-12" >
         <label class="sr-only" for="contentSearchText">Search content</label>
         <div class="input-group">
           <div class="input-group-btn">
@@ -34,9 +34,9 @@
               <li><a href="#">Music</a></li>
             </ul>
           </div>      
-          <input type="text" id="contentSearchText" class="form-control" placeholder="Search" aria-describedby="helpBlock">
+          <input type="text" id="contentSearchText" class="form-control" placeholder="Search" aria-describedby="helpBlock" ng-model="query">
           <span class="input-group-btn">
-            <button class="btn btn-default" type="button">Search</button>
+            <button class="btn btn-default" type="submit" >Search</button>
           </span>
         </div>
         <span id="helpBlock" class="help-block"><small>Search Books, Movies etc, OR <a href="#">Create custom content</a></small></span>
@@ -44,18 +44,11 @@
       </div>
     </form>
 
-    <div class="row results">
-      <h4>Subheading</h4>
-      <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-      <h4>Subheading</h4>
-      <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-      <h4>Subheading</h4>
-      <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
-
+    <div class="row results" ng-repeat="result in results">
+      <h4>{{result.searchInfo.textSnippet}}</h4>
+      <p>{{result.volumeInfo.description}}</p>
     </div>
-
+    </div>
     <footer class="footer">
       <p>&copy; Company 2014</p>
     </footer>
@@ -71,6 +64,7 @@
   <!-- local scripts -->
   <script src="scripts/services/main.js"></script>
   <script src="scripts/directives/main.js"></script>
+  <script src="scripts/controllers/main.js"></script>
   <script src="scripts/app.js"></script>
  </body>
 </html>

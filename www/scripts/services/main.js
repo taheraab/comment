@@ -18,13 +18,14 @@ mainServices.factory('googlePlusAPI', ['$rootScope', '$http',
       
       renderSigninBtn: function(elmId) {
         var options = {
-          scope: 'https://www.googleapis.com/auth/plus.login',
+          scope: 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/books',
           clientId: '37194207621-0tu7mjqcjoi45qa4ge20k6vvorul4bir.apps.googleusercontent.com',
           callback: googleAPI.onSignInCallback,
           theme: 'dark',
           cookiepolicy: 'single_host_origin',
           height: 'short',
           width: 'wide'
+          //approvalprompt: 'force'
         };
         gapi.signin.render(elmId, options);  
       },
@@ -46,6 +47,8 @@ mainServices.factory('googlePlusAPI', ['$rootScope', '$http',
           if (authResult['access_token']) {
             googleAPI.getProfile();
             googleAPI.getPeople();
+            //Load books API
+            gapi.client.load('books','v1');
           } else if (authResult['error']) {
             // There was an error, which means the user is not signed in.
             console.log('Google Signin error: ' + authResult['error']);
@@ -103,7 +106,7 @@ mainServices.factory('googlePlusAPI', ['$rootScope', '$http',
               user.signedIn = true;
               user.profile = {
               id: profile.id,
-              name: profile.displayName 
+              name: profile.displayName
               };
             });  
             console.log(user);
@@ -115,5 +118,32 @@ mainServices.factory('googlePlusAPI', ['$rootScope', '$http',
     };
     
     return googleAPI;
+  }
+]);
+
+/**
+* Service that searches for books given a query and returns result
+*/
+mainServices.factory('books', ['$rootScope', 
+  function($rootScope) {
+    var searchResults = {};
+    
+    var booksAPI = {      
+      /* search for books using full text search */
+      search: function(query, done) {
+        gapi.client.books.volumes.list({
+            q: query,
+            maxResults: 5
+        }).then(function(res) {
+          console.log(res);
+          done(res.result.items);
+        },function(err) {
+          console.log(err);
+          done({});
+        });
+      }
+      
+    };
+    return booksAPI;
   }
 ]);
