@@ -7,11 +7,34 @@ var mainServices = angular.module('mainServices', []);
 * This service handles all communication with GooglePlusApi 
 * and keeps track of logged in user
 */
-mainServices.factory('googlePlusAPI', [ '$http',
-  function($http) {
-    var userId = null;
+mainServices.factory('googlePlusAPI', ['$rootScope', '$http',
+  function($rootScope, $http) {
+    var user = {signedIn: false};
     
-    return {
+    var googleAPI = {
+      getUser: function() {
+        return user;
+      },
+      
+      renderSigninBtn: function(elmId) {
+        var options = {
+          scope: 'https://www.googleapis.com/auth/plus.login',
+          clientId: '37194207621-0tu7mjqcjoi45qa4ge20k6vvorul4bir.apps.googleusercontent.com',
+          callback: googleAPI.onSignInCallback,
+          theme: 'dark',
+          cookiepolicy: 'single_host_origin',
+          height: 'short',
+          width: 'wide'
+        };
+        gapi.signin.render(elmId, options);  
+      },
+      
+      signout: function() {
+          gapi.auth.signOut();
+          user.signedIn = false;
+          user.profile = {};
+      },
+      
        /**
        * Called after signin and starts the post-authorization operations.
        *
@@ -21,10 +44,11 @@ mainServices.factory('googlePlusAPI', [ '$http',
       onSignInCallback: function(authResult) {
         gapi.client.load('plus','v1').then(function() {
           if (authResult['access_token']) {
-            console.log('Access token received: ' + authResult['access_token']);
+            googleAPI.getProfile();
+            googleAPI.getPeople();
           } else if (authResult['error']) {
             // There was an error, which means the user is not signed in.
-            console.log('There was an error: ' + authResult['error']);
+            console.log('Google Signin error: ' + authResult['error']);
           }
           console.log('authResult', authResult);
         });
@@ -57,34 +81,39 @@ mainServices.factory('googlePlusAPI', [ '$http',
       /**
        * Gets and renders the list of people visible to this app.
        */
-      people: function() {
+      getPeople: function() {
         gapi.client.plus.people.list({
           'userId': 'me',
           'collection': 'visible'
         }).then(function(res) {
           var people = res.result;
             console.log(people);
-          for (var personIndex in people.items) {
-            person = people.items[personIndex];
-            console.log('person: ' +  person);
-          }
         });
       },
 
       /**
        * Gets and renders the currently signed in user's profile data.
        */
-      profile: function(){
+      getProfile: function(){
         gapi.client.plus.people.get({
           'userId': 'me'
         }).then(function(res) {
             var profile = res.result;
-            console.log(profile);  
+            $rootScope.$apply(function() {
+              user.signedIn = true;
+              user.profile = {
+              id: profile.id,
+              name: profile.displayName 
+              };
+            });  
+            console.log(user);
           }, function(err) {
             var error = err.result;
             console.log(error.message);
         });
       }
     };
+    
+    return googleAPI;
   }
 ]);

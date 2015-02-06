@@ -6,19 +6,19 @@ var mainDirectives = angular.module('mainDirectives', []);
 /**
 * Display login btn or logged in user info
 */
-mainDirectives.directive('loginInfo', ['$window', 'googlePlusAPI',
-  function($window, gapi) {
+mainDirectives.directive('loginInfo', ['googlePlusAPI',
+  function(googleAPI) {
     function link(scope, element, attrs) {
-      var options = {
-        scope: 'https://www.googleapis.com/auth/plus.login',
-        clientId: '37194207621-0tu7mjqcjoi45qa4ge20k6vvorul4bir.apps.googleusercontent.com',
-        callback: gapi.onSignInCallback,
-        theme: 'dark',
-        cookiepolicy: 'single_host_origin',
-        height: 'short',
-        width: 'wide'
+      scope.user = googleAPI.getUser();
+      
+      if (!scope.user.signedIn) {
+        //Render the signin button
+        googleAPI.renderSigninBtn('googleLoginBtn');
+      }
+      scope.signout = function() {
+        googleAPI.signout();
       };
-      $window.gapi.signin.render('googleLoginBtn', options);
+      
     }
     
     return {
