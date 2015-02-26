@@ -2,23 +2,25 @@
 @import 'base';
 
 /* Search results */
-.results {
-  @extend .mobile-padding;
+.result-list {
   margin: 20px 0;
+  .content-thumbnail {
+    width: 60px;
+    height: 80px;
+  }
+  li {
+    margin-top: 25px;
+  }
 }
 
-.search-bar {
+.page-content {
   @extend .mobile-padding;
 }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
-  .results {
-    @extend .no-mobile-padding;
-  }
-  
-  .search-bar {
+  .page-content {
     @extend .no-mobile-padding;
   }
 }

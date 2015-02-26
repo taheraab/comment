@@ -1,0 +1,40 @@
+<form ng-submit="searchContent()" >
+  <div class="form-group" >
+    <label class="sr-only" for="contentSearchText">Search content</label>
+    <div class="input-group">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">All <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#">Books</a></li>
+          <li><a href="#">Movies</a></li>
+          <li><a href="#">Music</a></li>
+        </ul>
+      </div>      
+      <input type="text" id="contentSearchText" class="form-control" placeholder="Search" aria-describedby="helpBlock" ng-model="query">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="submit" >Search</button>
+      </span>
+    </div>
+    <span id="helpBlock" class="help-block"><small>Search Books, Movies etc, OR <a href="#">Create custom content</a></small></span>
+
+  </div>
+</form>
+
+<ul class="media-list result-list" >
+  <li class="media" ng-repeat="result in results">
+    <div class="media-left">
+      <a ng-href="{{result.contentLink}}">
+        <img class="media-object content-thumbnail" ng-src="{{result.thumbnailLink}}">
+      </a>
+    </div>
+    <div class="media-body">
+      <small class="pull-right">
+        <i class='fa' ng-class="{'fa-star-o': r == 'empty', 'fa-star-half-empty': r == 'half', 'fa-star': r == 'full'}" 
+          ng-repeat="r in result.rating track by $index"/> </small>
+      <h4 class="media-heading">{{result.title}}</h4>
+      <p><span ng-bind-html="result.snippet"></span><br />
+      <small>By {{result.authors}}</small>
+      <small class="pull-right">{{result.publishedBy}}, {{result.publishedDate | date:'yyyy'}}</small></p>
+    </div>
+  </li>
+</ul>

@@ -124,23 +124,62 @@ mainServices.factory('googlePlusAPI', ['$rootScope', '$http',
 /**
 * Service that searches for books given a query and returns result
 */
-mainServices.factory('books', ['$rootScope', 
-  function($rootScope) {
-    var searchResults = {};
+mainServices.factory('books', ['$rootScope', '$filter',
+  function($rootScope, $filter) {
+    var searchResults = [];
+    var queryText = '';
     
     var booksAPI = {      
       /* search for books using full text search */
       search: function(query, done) {
         gapi.client.books.volumes.list({
             q: query,
-            maxResults: 5
+            maxResults: 10
         }).then(function(res) {
-          console.log(res);
-          done(res.result.items);
+          queryText = query;
+          searchResults = [];
+          console.log(res.result.items);
+          for (var i = 0; i < res.result.items.length; i++) {
+            var item = res.result.items[i];
+            var result = {
+              title: item.volumeInfo.title,
+              snippet: angular.isDefined(item.searchInfo)? item.searchInfo.textSnippet : item.volumeInfo.description,
+              rating: getRatingsArray(item.volumeInfo.averageRating),
+              publishedBy: angular.isDefined(item.volumeInfo.publisher)? item.volumeInfo.publisher: 'Unknown',
+              publishedDate: item.volumeInfo.publishedDate,
+              authors: angular.isDefined(item.volumeInfo.authors)? item.volumeInfo.authors.join(', '): 'Unknown',
+              thumbnailLink: angular.isDefined(item.volumeInfo.imageLinks)? item.volumeInfo.imageLinks.thumbnail: '',
+              contentLink: item.volumeInfo.canonicalVolumeLink
+            };
+            searchResults.push(result);
+          }
+          done(searchResults);
         },function(err) {
           console.log(err);
-          done({});
+          done([]);
         });
+        
+        function getRatingsArray(rating) {
+          var result = ['empty', 'empty', 'empty', 'empty', 'empty'];
+          if (angular.isDefined(rating) && !isNaN(parseFloat(rating))) {
+            var r = parseFloat(rating);
+            var i = 0;
+            while (r >= 1) {
+              result[i++] = 'full';
+              --r;
+            }
+            if (r > 0) result[i] = 'half';
+          }
+          return result;
+        }
+      },
+      
+      getSearchResults: function() {
+        return searchResults;
+      },
+      
+      getQueryText: function() {
+        return queryText;
       }
       
     };

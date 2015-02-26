@@ -6,6 +6,7 @@
   <meta charset="utf-8">
   <title> Comment </title>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
   <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
@@ -14,41 +15,17 @@
       <div class="pull-right"><login-info /></div>
       <nav style="clear:right">
         <ul class="nav nav-pills pull-right">
-          <li role="presentation" class="active"><a href="#">Home</a></li>
+          <li role="presentation" class="active"><a href="#/search">Home</a></li>
           <li role="presentation"><a href="#">My Content</a></li>
           <li role="presentation"><a href="#">About</a></li>
         </ul>
       </nav>
       <h3 class="text-muted">Comment</h3>
     </div>
-    <div ng-controller="searchController">  
-    <form class="row search-bar" ng-submit="searchContent()" >
-      <div class="form-group col-lg-12" >
-        <label class="sr-only" for="contentSearchText">Search content</label>
-        <div class="input-group">
-          <div class="input-group-btn">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">All <span class="caret"></span></button>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Books</a></li>
-              <li><a href="#">Movies</a></li>
-              <li><a href="#">Music</a></li>
-            </ul>
-          </div>      
-          <input type="text" id="contentSearchText" class="form-control" placeholder="Search" aria-describedby="helpBlock" ng-model="query">
-          <span class="input-group-btn">
-            <button class="btn btn-default" type="submit" >Search</button>
-          </span>
-        </div>
-        <span id="helpBlock" class="help-block"><small>Search Books, Movies etc, OR <a href="#">Create custom content</a></small></span>
-
-      </div>
-    </form>
-
-    <div class="row results" ng-repeat="result in results">
-      <h4>{{result.searchInfo.textSnippet}}</h4>
-      <p>{{result.volumeInfo.description}}</p>
+    
+    <div class="page-content" ng-view>  
     </div>
-    </div>
+    
     <footer class="footer">
       <p>&copy; Company 2014</p>
     </footer>
@@ -59,6 +36,8 @@
   <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
   <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
   <script src="https://apis.google.com/js/client:platform.js"></script>
   
   <!-- local scripts -->
