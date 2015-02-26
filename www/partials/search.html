@@ -38,3 +38,9 @@
     </div>
   </li>
 </ul>
+<br />
+<ul class="pager" ng-show="results.length">
+  <li class="previous" ng-class="{'disabled': curPage == 1}"><a href="" ng-click="prevPage()"><span aria-hidden="true">&larr;</span> Prev</a></li>
+  <li><span>{{curPage}}</span></li>
+  <li class="next"><a href="" ng-click="nextPage()">Next <span aria-hidden="true">&rarr;</span></a></li>
+</ul>

@@ -128,17 +128,21 @@ mainServices.factory('books', ['$rootScope', '$filter',
   function($rootScope, $filter) {
     var searchResults = [];
     var queryText = '';
+    var pageLength = 10;
     
     var booksAPI = {      
       /* search for books using full text search */
-      search: function(query, done) {
-        gapi.client.books.volumes.list({
-            q: query,
-            maxResults: 10
-        }).then(function(res) {
+      search: function(query, done, isNewSearch) {
+        var isNewSearch = angular.isDefined(isNewSearch)? isNewSearch: true;
+        if (isNewSearch) {
           queryText = query;
           searchResults = [];
-          console.log(res.result.items);
+        }
+        gapi.client.books.volumes.list({
+            q: queryText,
+            maxResults: pageLength,
+            startIndex: searchResults.length
+        }).then(function(res) {
           for (var i = 0; i < res.result.items.length; i++) {
             var item = res.result.items[i];
             var result = {
@@ -180,8 +184,11 @@ mainServices.factory('books', ['$rootScope', '$filter',
       
       getQueryText: function() {
         return queryText;
+      },
+    
+      getPageLength: function() {
+        return pageLength;
       }
-      
     };
     return booksAPI;
   }
