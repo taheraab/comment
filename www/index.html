@@ -13,11 +13,11 @@
   <div class="container">
     <div class="header">
       <div class="pull-right"><login-info /></div>
-      <nav style="clear:right">
+      <nav style="clear:right" ng-controller="navController">
         <ul class="nav nav-pills pull-right">
-          <li role="presentation" class="active"><a href="#/search">Home</a></li>
-          <li role="presentation"><a href="#">My Content</a></li>
-          <li role="presentation"><a href="#">About</a></li>
+          <li role="presentation" ng-class="{'active': menuItem == 'search'}" ng-click="menuItem = 'search'"><a href="#/search">Home</a></li>
+          <li role="presentation" ng-class="{'active': menuItem == 'my-content'}" ng-click="menuItem = 'my-content'"><a href="#/my-content">My Content</a></li>
+          <li role="presentation" ng-class="{'active': menuItem == 'about'}" ng-click="menuItem = 'about'"><a href="#">About</a></li>
         </ul>
       </nav>
       <h3 class="text-muted">Comment</h3>
@@ -44,6 +44,7 @@
   <script src="scripts/services/main.js"></script>
   <script src="scripts/directives/main.js"></script>
   <script src="scripts/controllers/main.js"></script>
+  <script src="scripts/controllers/my-content.js"></script>
   <script src="scripts/app.js"></script>
  </body>
 </html>

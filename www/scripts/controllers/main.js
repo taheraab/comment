@@ -1,6 +1,15 @@
 'use strict';
 var mainControllers = angular.module('mainControllers', []);
 
+// Controller for handling top level navigation
+mainControllers.controller('navController', ['$scope', '$location', 
+  function($scope, $location) {
+    $scope.menuItem = 'search';
+    var pathSegment = $location.path().split('/')[1];
+    if (pathSegment != '') $scope.menuItem = pathSegment;
+  }
+]);
+
 //Controller for handling content search results
 mainControllers.controller('searchController', ['$scope', 'books', 
   function($scope, books) {
@@ -13,7 +22,6 @@ mainControllers.controller('searchController', ['$scope', 'books',
     function setCurPage(pageNum) {
       $scope.results = $scope.totalResults.slice((pageNum - 1) * $scope.pageLength, pageNum * $scope.pageLength - 1);
       $scope.curPage = pageNum;
-      console.log($scope.curPage);
     }
     
     $scope.searchContent = function() {
@@ -27,7 +35,6 @@ mainControllers.controller('searchController', ['$scope', 'books',
       var newPage = $scope.curPage + 1;
       // if it is the last page, search for more
       if (newPage * $scope.pageLength > $scope.totalResults.length) {
-        console.log("here");
         books.search($scope.query, function(result) {
           $scope.totalResults = result;
           setCurPage(newPage);

@@ -46,7 +46,6 @@ mainServices.factory('googlePlusAPI', ['$rootScope', '$http',
         gapi.client.load('plus','v1').then(function() {
           if (authResult['access_token']) {
             googleAPI.getProfile();
-            googleAPI.getPeople();
             //Load books API
             gapi.client.load('books','v1');
           } else if (authResult['error']) {
@@ -129,6 +128,21 @@ mainServices.factory('books', ['$rootScope', '$filter',
     var searchResults = [];
     var queryText = '';
     var pageLength = 10;
+
+    function getRatingsArray(rating) {
+      var result = ['empty', 'empty', 'empty', 'empty', 'empty'];
+      if (angular.isDefined(rating) && !isNaN(parseFloat(rating))) {
+        var r = parseFloat(rating);
+        var i = 0;
+        while (r >= 1) {
+          result[i++] = 'full';
+          --r;
+        }
+        if (r > 0) result[i] = 'half';
+      }
+      return result;
+    }
+
     
     var booksAPI = {      
       /* search for books using full text search */
@@ -153,7 +167,8 @@ mainServices.factory('books', ['$rootScope', '$filter',
               publishedDate: item.volumeInfo.publishedDate,
               authors: angular.isDefined(item.volumeInfo.authors)? item.volumeInfo.authors.join(', '): 'Unknown',
               thumbnailLink: angular.isDefined(item.volumeInfo.imageLinks)? item.volumeInfo.imageLinks.thumbnail: '',
-              contentLink: item.volumeInfo.canonicalVolumeLink
+              contentLink: item.volumeInfo.canonicalVolumeLink,
+              id: item.id
             };
             searchResults.push(result);
           }
@@ -163,19 +178,34 @@ mainServices.factory('books', ['$rootScope', '$filter',
           done([]);
         });
         
-        function getRatingsArray(rating) {
-          var result = ['empty', 'empty', 'empty', 'empty', 'empty'];
-          if (angular.isDefined(rating) && !isNaN(parseFloat(rating))) {
-            var r = parseFloat(rating);
-            var i = 0;
-            while (r >= 1) {
-              result[i++] = 'full';
-              --r;
-            }
-            if (r > 0) result[i] = 'half';
-          }
-          return result;
-        }
+      },
+      
+      /* retrieve a book using its volumeId */
+      getBook: function(volumeId, done) {
+        gapi.client.books.volumes.get({
+            volumeId: volumeId
+        }).then(function(res) {
+            var item = res.result;
+            console.log(item);
+            var result = {
+              title: item.volumeInfo.title,
+              description: item.volumeInfo.description,
+              rating: getRatingsArray(item.volumeInfo.averageRating),
+              publishedBy: angular.isDefined(item.volumeInfo.publisher)? item.volumeInfo.publisher: 'Unknown',
+              publishedDate: item.volumeInfo.publishedDate,
+              authors: angular.isDefined(item.volumeInfo.authors)? item.volumeInfo.authors.join(', '): 'Unknown',
+              thumbnailLink: angular.isDefined(item.volumeInfo.imageLinks)? item.volumeInfo.imageLinks.thumbnail: '',
+              contentLink: item.volumeInfo.canonicalVolumeLink,
+              id: item.id,
+              categories: item.volumeInfo.categories[0],
+              pageCount: item.volumeInfo.pageCount
+            };
+          done(result);
+        },function(err) {
+          console.log(err);
+          done({});
+        });
+        
       },
       
       getSearchResults: function() {

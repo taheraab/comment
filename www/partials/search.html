@@ -31,10 +31,9 @@
       <small class="pull-right">
         <i class='fa' ng-class="{'fa-star-o': r == 'empty', 'fa-star-half-empty': r == 'half', 'fa-star': r == 'full'}" 
           ng-repeat="r in result.rating track by $index"/> </small>
-      <h4 class="media-heading">{{result.title}}</h4>
+      <h4 class="media-heading"><a ng-href="#/my-content?volumeId={{result.id}}">{{result.title}}</a></h4>
       <p><span ng-bind-html="result.snippet"></span><br />
-      <small>By {{result.authors}}</small>
-      <small class="pull-right">{{result.publishedBy}}, {{result.publishedDate | date:'yyyy'}}</small></p>
+      <small><strong>By {{result.authors}} </strong>({{result.publishedBy}}, {{result.publishedDate | date:'yyyy'}})</small></p>
     </div>
   </li>
 </ul>

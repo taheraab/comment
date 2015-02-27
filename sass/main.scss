@@ -1,5 +1,6 @@
 /* Import partial */
 @import 'base';
+$float-spacing: 15px;
 
 /* Search results */
 .result-list {
@@ -10,6 +11,17 @@
   }
   li {
     margin-top: 25px;
+  }
+}
+
+#content-detail {
+  .content-thumbnail {
+    margin-right: $float-spacing;
+    margin-bottom: $float-spacing;
+  }
+  .content-summary {
+    margin-left: $float-spacing;
+    margin-bottom: $float-spacing;
   }
 }
 
