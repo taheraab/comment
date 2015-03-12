@@ -1,6 +1,7 @@
 /* Variables */
 $header-background: #eeeeee;
 $border-color: #eeeeee;
+$min-page-width: 250px;
 
 /* Space out content a bit */
 body {
@@ -12,7 +13,7 @@ body {
 .mobile-margin {
   margin-right: 15px;
   margin-left: 15px;
-  min-width: 250px;
+  min-width: $min-page-width;
 }
 
 

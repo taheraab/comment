@@ -1,0 +1,23 @@
+@import 'base';
+#loginBox {
+  @extend .mobile-margin;
+  
+  img {
+    margin-left: -15px;
+  }
+  
+  .feature-list {
+    border-left: 2px solid blue;
+    font-size: larger;
+    li {
+      margin-top: 10px;
+    }
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  #loginBox {
+    @extend .no-mobile-margin;
+  }
+}

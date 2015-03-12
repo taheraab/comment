@@ -23,9 +23,9 @@ mainServices.factory('googlePlusAPI', ['$rootScope', '$http',
           callback: googleAPI.onSigninCallback,
           theme: 'dark',
           cookiepolicy: 'single_host_origin',
-          height: 'short',
-          width: 'wide'
-          //approvalprompt: 'force'
+          height: 'large',
+          width: 'wide',
+          approvalprompt: 'force'
         };
         gapi.signin.render(elmId, options);  
       },
@@ -50,6 +50,7 @@ mainServices.factory('googlePlusAPI', ['$rootScope', '$http',
             gapi.client.load('books','v1');
           } else if (authResult['error']) {
             // There was an error, which means the user is not signed in.
+            user.errMsg = authResult['error'];
             console.log('Google Signin error: ' + authResult['error']);
           }
           console.log('authResult', authResult);

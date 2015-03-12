@@ -7,18 +7,30 @@
   <title> Comment </title>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
-  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/login.css">
 </head>
 <body>
   <div class="container">
-    <div id="loginBox" class="jumbotron">
-      <h2>Comment &nbsp;<small> Search, store, comment and share content</small></h2>
+    <div id="loginBox" class="jumbotron" ng-app="loginApp">
+      <div class="row">
+      <div class="col-md-4">
+        <img src="images/logo.png" /> 
+        <h5>  Search, store, comment and share</h5>
+      </div>
+      <div class="feature-list col-md-offset-1 col-md-7">
       <ul class="fa-ul">
         <li><i class="fa-li fa fa-search"></i>Search for public content like Books, Movies etc</li>
         <li><i class="fa-li fa fa-pencil"></i>Write reviews/comments on favourites</li>
         <li><i class="fa-li fa fa-share-alt"></i>Share content and comments with friends</li>
       </ul>
-      <div id="googleLoginBtn" />
+      </div>
+      </div>
+      <br /><br/>
+      <div class="row">
+        <div class="col-md-offset-4 col-md-4">
+          <div id="googleLoginBtn" ng-controller="loginController"/>
+        </div>
+      </div>
     </div>
   </div>
   <!-- scripts -->
