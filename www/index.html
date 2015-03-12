@@ -11,16 +11,20 @@
 </head>
 <body>
   <div class="container">
-    <div class="header">
+    <div class="header row">
+      <div class="col-md-8">
+        <img src="images/logo.png"  />
+      </div>
+      <div class="col-md-4">
       <div class="pull-right"><login-info /></div>
-      <nav style="clear:right" ng-controller="navController">
-        <ul class="nav nav-pills pull-right">
+      <nav class="pull-right" ng-controller="navController">
+        <ul class="nav nav-pills">
           <li role="presentation" ng-class="{'active': menuItem == 'search'}" ng-click="menuItem = 'search'"><a href="#/search">Home</a></li>
           <li role="presentation" ng-class="{'active': menuItem == 'my-content'}" ng-click="menuItem = 'my-content'"><a href="#/my-content">My Content</a></li>
           <li role="presentation" ng-class="{'active': menuItem == 'about'}" ng-click="menuItem = 'about'"><a href="#">About</a></li>
         </ul>
       </nav>
-      <h3 class="text-muted">Comment</h3>
+      </div>
     </div>
     
     <div class="page-content" ng-view>  

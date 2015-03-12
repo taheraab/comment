@@ -2,6 +2,10 @@
 @import 'base';
 $float-spacing: 15px;
 
+#loginBox {
+  line-height: 1.5;
+}
+
 /* Search results */
 .result-list {
   margin: 20px 0;
@@ -14,7 +18,7 @@ $float-spacing: 15px;
   }
 }
 
-#content-detail {
+#contentDetail {
   .content-thumbnail {
     margin-right: $float-spacing;
     margin-bottom: $float-spacing;
@@ -26,13 +30,13 @@ $float-spacing: 15px;
 }
 
 .page-content {
-  @extend .mobile-padding;
+  @extend .mobile-margin;
 }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
   .page-content {
-    @extend .no-mobile-padding;
+    @extend .no-mobile-margin;
   }
 }

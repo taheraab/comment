@@ -1,5 +1,6 @@
 /* Variables */
-$border-color: #e5e5e5;
+$header-background: #eeeeee;
+$border-color: #eeeeee;
 
 /* Space out content a bit */
 body {
@@ -7,40 +8,39 @@ body {
   padding-bottom: 20px;
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.mobile-padding {
-  padding-right: 15px;
-  padding-left: 15px;
+/* Everything gets side spacing for mobile first views */
+.mobile-margin {
+  margin-right: 15px;
+  margin-left: 15px;
+  min-width: 250px;
 }
 
 
 /* Custom page header */
 .header {
-  @extend .mobile-padding;
-  border-bottom: 1px solid $border-color;
-  h3 {
-    padding-bottom: 9px;
-    margin-top: 0;
-    margin-bottom: 0;
-    line-height: 40px;
-  }
-
+  @extend .mobile-margin;
+  background-color: $header-background;
+  padding: 20px 10px;
+  margin-bottom: 20px;
   nav {
     li {
       a {
         padding: 5px 15px;
       }
     }
+    clear: right;
+  }
+  
+  img {
+    width: 200px;
+    height: 50px;
   }
 }
 
-#salutation {
-  padding-bottom: 10px;
-}
 
 /* Custom page footer */
 .footer {
-  @extend .mobile-padding;
+  @extend .mobile-margin;
   padding-top: 19px;
   color: #777;
   border-top: 1px solid $border-color;
@@ -56,18 +56,17 @@ body {
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
-  .no-mobile-padding {
-    padding-right: 0;
-    padding-left: 0;
+  .no-mobile-margin {
+    margin-right: 0;
+    margin-left: 0;
   }
 
   /* Remove the padding we set earlier */
   .footer {
-    @extend .no-mobile-padding;
+    @extend .no-mobile-margin;
   }
   /* Space out the masthead */
   .header {
-    @extend .no-mobile-padding;
-    margin-bottom: 30px;
+    @extend .no-mobile-margin;
   }
 }

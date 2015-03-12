@@ -20,7 +20,7 @@ mainServices.factory('googlePlusAPI', ['$rootScope', '$http',
         var options = {
           scope: 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/books',
           clientId: '37194207621-0tu7mjqcjoi45qa4ge20k6vvorul4bir.apps.googleusercontent.com',
-          callback: googleAPI.onSignInCallback,
+          callback: googleAPI.onSigninCallback,
           theme: 'dark',
           cookiepolicy: 'single_host_origin',
           height: 'short',
@@ -42,7 +42,7 @@ mainServices.factory('googlePlusAPI', ['$rootScope', '$http',
        * @param {Object} authResult An Object which contains the access token and
        *   other authentication information.
        */
-      onSignInCallback: function(authResult) {
+      onSigninCallback: function(authResult) {
         gapi.client.load('plus','v1').then(function() {
           if (authResult['access_token']) {
             googleAPI.getProfile();
