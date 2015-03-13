@@ -24,8 +24,8 @@ mainServices.factory('googlePlusAPI', ['$rootScope', '$http',
           theme: 'dark',
           cookiepolicy: 'single_host_origin',
           height: 'large',
-          width: 'wide',
-          approvalprompt: 'force'
+          width: 'wide'
+          //approvalprompt: 'force'
         };
         gapi.signin.render(elmId, options);  
       },

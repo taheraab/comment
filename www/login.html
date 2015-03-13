@@ -9,9 +9,13 @@
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
   <link rel="stylesheet" href="styles/login.css">
 </head>
-<body>
-  <div class="container">
-    <div id="loginBox" class="jumbotron" ng-app="loginApp">
+<body ng-app="loginApp">
+  <div class="container" ng-controller="loginController">
+    <div class="alert alert-warning alert-dismissible" role="alert" ng-show="angular.isDefined(user.errMsg)" ng-cloak>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <strong>Login Error!</strong> {{user.errMsg}}
+    </div>
+    <div id="loginBox" class="jumbotron">
       <div class="row">
       <div class="col-md-4">
         <img src="images/logo.png" /> 
@@ -28,7 +32,7 @@
       <br /><br/>
       <div class="row">
         <div class="col-md-offset-4 col-md-4">
-          <div id="googleLoginBtn" ng-controller="loginController"/>
+          <div id="googleLoginBtn" />
         </div>
       </div>
     </div>
