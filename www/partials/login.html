@@ -1,0 +1,25 @@
+<div class="alert alert-warning alert-dismissible" role="alert" ng-show="angular.isDefined(user.errMsg)" ng-cloak>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>Login Error!</strong> {{user.errMsg}}
+</div>
+<div id="loginBox" class="jumbotron">
+  <div class="row">
+  <div class="col-md-4">
+    <img src="images/logo.png" /> 
+    <h5>  Search, store, comment and share</h5>
+  </div>
+  <div class="feature-list col-md-offset-1 col-md-7">
+  <ul class="fa-ul">
+    <li><i class="fa-li fa fa-search"></i>Search for public content like Books, Movies etc</li>
+    <li><i class="fa-li fa fa-pencil"></i>Write reviews/comments on favourites</li>
+    <li><i class="fa-li fa fa-share-alt"></i>Share content and comments with friends</li>
+  </ul>
+  </div>
+  </div>
+  <br /><br/>
+  <div class="row">
+    <div class="col-md-offset-4 col-md-4">
+      <div id="googleLoginBtn" />
+    </div>
+  </div>
+</div>

@@ -2,11 +2,15 @@
 
 /* Comment app configuration */
 var app = angular.module('commentApp', 
-  ['mainServices', 'mainDirectives', 'mainControllers', 'myContentControllers', 'ngRoute', 'ngSanitize']);
+  ['mainServices', 'mainDirectives', 'mainControllers', 'myContentControllers', 'loginControllers', 'ngRoute', 'ngSanitize']);
 
 app.config(['$routeProvider', 
   function($routeProvider) {
     $routeProvider
+      .when('/login', {
+        templateUrl: 'partials/login.html',
+        controller: 'loginController'
+      })
       .when('/search', {
         templateUrl: 'partials/search.html',
         controller: 'searchController'
@@ -16,7 +20,7 @@ app.config(['$routeProvider',
         controller: 'myContentController'
       })
       .otherwise({
-        redirectTo: '/search'
+        redirectTo: '/login'
       });
   }
 ]);;

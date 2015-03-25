@@ -1,9 +1,16 @@
 'use strict';
 var mainControllers = angular.module('mainControllers', []);
 
-// Controller for handling top level navigation
-mainControllers.controller('navController', ['$scope', '$location', 
-  function($scope, $location) {
+
+mainControllers.controller('mainController', ['$scope', '$location', 'googlePlusAPI', '$window',
+  function($scope, $location, googleAPI, $window) {
+    $scope.user = googleAPI.getUser();
+    
+    $scope.signout = function() {
+      googleAPI.signout();
+      $window.location = "index.html#/login";
+    };
+        
     $scope.menuItem = 'search';
     var pathSegment = $location.path().split('/')[1];
     if (pathSegment != '') $scope.menuItem = pathSegment;

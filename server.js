@@ -16,7 +16,11 @@ app.use('/loginservice', loginService);
 
 //check session is valid
 app.use(function(req, res, next) {
-  next();
+  if (typeof (req.session.user) != 'undefined') {
+    next();
+  }else {
+    res.status(401).end();
+  }
 });
 
   

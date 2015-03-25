@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="commentApp">
+<html lang="en">
 <head>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,15 +9,20 @@
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
   <link rel="stylesheet" href="styles/main.css">
 </head>
-<body>
-  <div class="container">
-    <div class="header row">
-      <div class="col-md-8">
+<body ng-app="commentApp">
+  <div class="container" ng-controller="mainController">
+    <div class="header row" ng-show="user.signedIn">
+      <div class="col-md-6">
         <img src="images/logo.png"  />
       </div>
-      <div class="col-md-4">
-      <div class="pull-right"><login-info /></div>
-      <nav class="pull-right" ng-controller="navController">
+      <div class="col-md-6">
+      <div class="pull-right">
+        <div id="salutation">  
+          <div class="text-muted"> Welcome <strong>{{user.profile.name}} </strong> &emsp; 
+            <button class="btn btn-xs btn-danger" ng-click="signout()">Signout</button></div>
+        </div>      
+      </div>
+      <nav class="pull-right">
         <ul class="nav nav-pills">
           <li role="presentation" ng-class="{'active': menuItem == 'search'}" ng-click="menuItem = 'search'"><a href="#/search">Home</a></li>
           <li role="presentation" ng-class="{'active': menuItem == 'my-content'}" ng-click="menuItem = 'my-content'"><a href="#/my-content">My Content</a></li>
@@ -30,8 +35,8 @@
     <div class="page-content" ng-view>  
     </div>
     
-    <footer class="footer">
-      <p>&copy; Company 2014</p>
+    <footer class="footer" ng-show="user.signedIn">
+      <p>&copy; Ekavali 2015</p>
     </footer>
 
   </div> <!-- /container -->
@@ -49,6 +54,7 @@
   <script src="scripts/directives/main.js"></script>
   <script src="scripts/controllers/main.js"></script>
   <script src="scripts/controllers/my-content.js"></script>
+  <script src="scripts/controllers/login.js"></script>
   <script src="scripts/app.js"></script>
  </body>
 </html>

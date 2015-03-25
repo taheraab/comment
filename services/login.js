@@ -5,7 +5,8 @@ var router = express.Router();
 
 router.post('/signin', function(req, res, next) {
   console.log(req.body);
-  next();
+  req.session.user = {id: req.body.userId};
+  res.end();
 });
 
 module.exports = router;
