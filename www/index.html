@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
   <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/login.css">
 </head>
 <body ng-app="commentApp">
   <div class="container" ng-controller="mainController">
@@ -20,13 +21,14 @@
         <div id="salutation">  
           <div class="text-muted"> Welcome <strong>{{user.profile.name}} </strong> &emsp; 
             <button class="btn btn-xs btn-danger" ng-click="signout()">Signout</button></div>
+            <button class="btn" ng-click="test()">test</button></div>
         </div>      
       </div>
       <nav class="pull-right">
         <ul class="nav nav-pills">
-          <li role="presentation" ng-class="{'active': menuItem == 'search'}" ng-click="menuItem = 'search'"><a href="#/search">Home</a></li>
-          <li role="presentation" ng-class="{'active': menuItem == 'my-content'}" ng-click="menuItem = 'my-content'"><a href="#/my-content">My Content</a></li>
-          <li role="presentation" ng-class="{'active': menuItem == 'about'}" ng-click="menuItem = 'about'"><a href="#">About</a></li>
+          <li role="presentation" ng-class="{'active': menuItem == '/search'}" ng-click="menuItem = '/search'"><a href="#/search">Home</a></li>
+          <li role="presentation" ng-class="{'active': menuItem == '/my-content'}" ng-click="menuItem = '/my-content'"><a href="#/my-content">My Content</a></li>
+          <li role="presentation" ng-class="{'active': menuItem == '/about'}" ng-click="menuItem = '/about'"><a href="#">About</a></li>
         </ul>
       </nav>
       </div>

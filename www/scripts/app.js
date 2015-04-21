@@ -4,8 +4,13 @@
 var app = angular.module('commentApp', 
   ['mainServices', 'mainDirectives', 'mainControllers', 'myContentControllers', 'loginControllers', 'ngRoute', 'ngSanitize']);
 
-app.config(['$routeProvider', 
-  function($routeProvider) {
+app.value('serverTimedOut', false);
+  
+app.config(['$routeProvider', '$httpProvider', 
+  function($routeProvider, $httpProvider) {
+    
+    $httpProvider.interceptors.push('myHttpInterceptor');
+    
     $routeProvider
       .when('/login', {
         templateUrl: 'partials/login.html',
@@ -23,4 +28,7 @@ app.config(['$routeProvider',
         redirectTo: '/login'
       });
   }
-]);;
+]);
+
+
+

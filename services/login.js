@@ -9,4 +9,9 @@ router.post('/signin', function(req, res, next) {
   res.end();
 });
 
+router.get('/signout', function(req, res, next) {
+  console.log('In signout');
+  delete req.session.user;
+  res.end();
+});
 module.exports = router;

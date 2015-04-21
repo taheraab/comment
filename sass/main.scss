@@ -2,9 +2,6 @@
 @import 'base';
 $float-spacing: 15px;
 
-#loginBox {
-  line-height: 1.5;
-}
 
 /* Search results */
 .result-list {
@@ -31,6 +28,10 @@ $float-spacing: 15px;
 
 .page-content {
   @extend .mobile-margin;
+}
+
+#salutation {
+  margin-bottom: 5px;
 }
 
 /* Responsive: Portrait tablets and up */

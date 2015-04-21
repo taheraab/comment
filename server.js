@@ -23,6 +23,9 @@ app.use(function(req, res, next) {
   }
 });
 
+app.use('/contentservice', function(req, res, next) {
+  res.status(401).end();
+});
   
 var server = app.listen(8080, function() {
   console.log('Test webserver listening at port: ' + server.address().port);

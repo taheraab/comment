@@ -3,12 +3,30 @@
 /* Main services */
 var mainServices = angular.module('mainServices', []);
 
+mainServices.value('serverStatus', {timedOut: false});
+/**
+* Http interceptor to catch 401 response and redirect browser accordingly
+*/
+mainServices.factory('myHttpInterceptor', ['$q', '$location', 'serverStatus', 
+  function($q, $location, serverStatus) {
+    return {
+      'responseError': function(rejection) {
+        if (rejection.status == 401) {
+          serverStatus.timedOut = true;
+          $location.path('/login').replace();
+        }
+        return $q.reject(rejection);
+      }
+    };
+  }
+])
+
 /** 
 * This service handles all communication with GooglePlusApi 
 * and keeps track of logged in user
 */
-mainServices.factory('googlePlusAPI', ['$rootScope', '$http',
-  function($rootScope, $http) {
+mainServices.factory('googlePlusAPI', ['$rootScope', '$http', 'serverStatus',
+  function($rootScope, $http, serverStatus) {
     var user = {signedIn: false};
     
     var googleAPI = {
@@ -117,6 +135,11 @@ mainServices.factory('googlePlusAPI', ['$rootScope', '$http',
       }
     };
     
+    $rootScope.$watch(function() {return serverStatus.timedOut;}, function(val) {
+      if (val) { 
+        googleAPI.signout();
+      }
+    });
     return googleAPI;
   }
 ]);
