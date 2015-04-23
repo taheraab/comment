@@ -2,6 +2,7 @@ node_modules/
 www/bower_components
 www/glogin.html
 www/auth.html
+www/styles/*.map
 .sass-cache
 client_secret*
 GPID.txt
