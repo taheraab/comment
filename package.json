@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "Collect Friend reviews and comments on books, movies etc",
   "scripts": {
+    "prestart": "npm install",
+    "postinstall": "bower install && grunt sass",
     "start": "node server.js"
   },
   "author": "Tahera",
@@ -22,5 +24,8 @@
     "karma-jasmine": "^0.3.5",
     "karma-ng-html2js-preprocessor": "^0.1.2",
     "karma-ng-json2js-preprocessor": "^1.0.0"
+  },
+  "engines": {
+    "node": "0.10.x"
   }
 }
