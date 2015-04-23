@@ -28,9 +28,6 @@ mainControllers.controller('mainController', ['$scope', '$location', 'googlePlus
       }
     });
 
-    $scope.test = function() {
-      $http.get('/contentservice'); 
-    };
   }
 ]);
 

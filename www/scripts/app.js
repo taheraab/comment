@@ -4,7 +4,6 @@
 var app = angular.module('commentApp', 
   ['mainServices', 'mainDirectives', 'mainControllers', 'myContentControllers', 'loginControllers', 'ngRoute', 'ngSanitize']);
 
-app.value('serverTimedOut', false);
   
 app.config(['$routeProvider', '$httpProvider', 
   function($routeProvider, $httpProvider) {
