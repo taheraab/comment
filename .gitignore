@@ -1,10 +1,8 @@
 node_modules/
-www/styles
 www/bower_components
 www/glogin.html
 www/auth.html
 .sass-cache
-.bowerrc
 client_secret*
 GPID.txt
 logo_images.zip
