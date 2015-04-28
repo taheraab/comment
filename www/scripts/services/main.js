@@ -247,3 +247,39 @@ mainServices.factory('books', ['$rootScope', '$filter',
     return booksAPI;
   }
 ]);
+
+/**
+* This is a notification service to display UI alerts
+*/
+mainServices.factory('notify', ['$timeout',
+  function($timeout) {
+    // Display #notify div with msg
+    function showNotification(type, msg) {
+      var $body = angular.element(document.getElementsByTagName('body')[0]);
+      var $notification = angular.element('<div id="notification" class="alert notification" role="alert">' 
+      + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' 
+      + '<span aria-hidden="true">&times;</span></button></div>');
+      $body.append($notification);
+      var alertClass = 'alert-' + type;
+      $notification.append('<div class="msg">' + msg + '</div>');
+      $notification.addClass(alertClass);
+      $notification.fadeIn();
+      $timeout(function() {
+        $notification.fadeOut(function() {
+          $notification.remove();
+        });
+      }, 5000);
+    }
+    return {
+      success: function(msg) {
+        showNotification('success', msg);
+      },
+      info: function(msg) {
+        showNotification('info', msg);        
+      },
+      error: function(msg) {
+        showNotification('danger', msg);
+      }
+    }
+  }
+]);

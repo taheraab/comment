@@ -34,6 +34,13 @@ $float-spacing: 15px;
   margin-bottom: 5px;
 }
 
+.notification {
+  position: fixed;
+  right: 1%;
+  bottom: 1%;
+  display: none;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */
