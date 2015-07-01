@@ -2,7 +2,7 @@
 
 /* Comment app configuration */
 var app = angular.module('commentApp', 
-  ['mainServices', 'mainDirectives', 'mainControllers', 'myContentControllers', 'loginControllers', 'ngRoute', 'ngSanitize']);
+  ['mainServices', 'mainDirectives', 'mainControllers', 'myContentControllers', 'loginControllers', 'ngRoute', 'ngSanitize', 'ngAria']);
 
   
 app.config(['$routeProvider', '$httpProvider', 

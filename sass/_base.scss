@@ -47,6 +47,11 @@ body {
   border-top: 1px solid $border-color;
 }
 
+.active {
+  font-weight: bold;  
+}
+
+
 /* Customize container */
 @media (min-width: 768px) {
   .container {

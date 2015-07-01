@@ -30,6 +30,9 @@ body {
   color: #777;
   border-top: 1px solid #eeeeee; }
 
+.active {
+  font-weight: bold; }
+
 /* Customize container */
 @media (min-width: 768px) {
   .container {

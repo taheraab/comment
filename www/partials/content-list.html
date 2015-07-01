@@ -1,0 +1,16 @@
+<div id="contentList" >
+	<dl>
+		<dt>Books ({{contentList.length}})</dt>
+		<dd>
+			<ul class="list-unstyled">
+				<li ng-repeat="item in contentList" ng-class="{active:($index == curItemIndex)}" >
+					<a href="" ng-click="showItem($index)" >{{item.title}}</a>
+				</li>
+			</ul>	
+		</dd>
+	</dl>
+	<dl>
+		<dt>Movies</dt>
+		<dd></dd>
+	</dl>
+</div>

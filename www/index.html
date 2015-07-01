@@ -25,9 +25,9 @@
       </div>
       <nav class="pull-right">
         <ul class="nav nav-pills">
-          <li role="presentation" ng-class="{'active': menuItem == '/search'}" ng-click="menuItem = '/search'"><a href="#/search">Home</a></li>
-          <li role="presentation" ng-class="{'active': menuItem == '/my-content'}" ng-click="menuItem = '/my-content'"><a href="#/my-content">My Content</a></li>
-          <li role="presentation" ng-class="{'active': menuItem == '/about'}" ng-click="menuItem = '/about'"><a href="#">About</a></li>
+          <li ng-class="{'active': menuItem == '/search'}" ng-click="menuItem = '/search'"><a href="#/search">Home</a></li>
+          <li ng-class="{'active': menuItem == '/my-content'}" ng-click="menuItem = '/my-content'"><a href="#/my-content">My Content</a></li>
+          <li ng-class="{'active': menuItem == '/about'}" ng-click="menuItem = '/about'"><a href="#">About</a></li>
         </ul>
       </nav>
       </div>
@@ -47,6 +47,7 @@
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-aria/angular-aria.js"></script>
   <script src="https://apis.google.com/js/client:platform.js"></script>
   
   <!-- local scripts -->
