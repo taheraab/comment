@@ -2,11 +2,12 @@
 /**
  * Content services to access media (books, movies, etc)
  */
- var contentServices = angular.module('contentServices', []);
- /**
+var bookServices = angular.module('bookServices', []);
+ 
+/**
 * Service that searches for books given a query and returns result
 */
-contentServices.factory('books', 
+bookServices.factory('books', 
   function() {
     var searchResults = [];
     var queryText = '';
@@ -121,3 +122,65 @@ contentServices.factory('books',
     return booksAPI;
   }
 );
+
+/**
+ * Service to retrieve user saved books from DB
+ */
+ bookServices.factory('userBooks', ['$http', 
+   function($http) {
+     var bookList = [];
+     return {
+       
+       /**
+        * Return all book titles
+        */
+       getAll: function(done) {
+          if (bookList.length == 0) {
+            $http.get('/bookservice/getAll')
+            .success(function(result) {
+                for (var i = 0; i < result.length; i++) {
+                  bookList.push({type: 'summary', value: result[i]});
+                }
+                done(bookList);
+            });  
+          }else done(bookList);
+       },
+       
+       /**
+        * Get book details 
+        */
+       get: function(i, done) {
+          if (bookList[i].type == 'summary') {
+            $http.get('/bookservice/get/' +  bookList[i].value._id)
+            .success(function(result){
+               bookList[i].value = result;
+               bookList[i].type = 'detail';
+               done(bookList[i]);
+            });
+          }else done(bookList[i]);
+          console.log(bookList);
+       },
+       
+       save: function(type, i, book, done) {
+          if (type == 'unsaved') { // this is a new book
+            $http.post('/bookservice/add', book)
+            .success(function(res) {
+              if (res.result) {
+                bookList.push({type:'detail', value: book});
+              }
+               done(res);
+            });
+          }else {
+            $http.post('/bookservice/update', book)
+            .success(function(res) {
+               if (res.result) {
+                 bookList[i].value = book;
+               }
+               done(res);
+            });
+          }
+       }
+       
+     }; 
+   }
+ ]);

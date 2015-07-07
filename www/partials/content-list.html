@@ -1,24 +1,24 @@
 <div id="contentList" >
 	<dl>
-		<dt>Unsaved Content ({{Util.keys(unsavedContentList).length}})</dt>
+		<dt><a href="" ng-click="ucExpanded = !ucExpanded">
+			<span class="glyphicon" ng-class="{'glyphicon-collapse-up': ucExpanded, 'glyphicon-collapse-down': !ucExpanded}" />
+				Unsaved Content ({{Util.keys(unsavedContentList).length}})</a></dt>
 		<dd>
-			<ul class="list-unstyled">
+			<ul ng-show="ucExpanded">
 				<li ng-repeat="(key, val) in unsavedContentList" ng-class = "{active:(key == curItemIndex)}">
 					<a href="" ng-click="showItem(key, 'unsaved')"><i>{{val.title}}</i></a>
 				</li>
 			</ul>
 		</dd>	
-		<dt>Books ({{contentList.length}})</dt>
+		<dt><a href="" ng-click="bExpanded = !bExpanded">
+			<span class="glyphicon" ng-class="{'glyphicon-collapse-up': bExpanded, 'glyphicon-collapse-down': !bExpanded}" />
+			Books ({{bookList.length}})</a></dt>
 		<dd>
-			<ul class="list-unstyled">
-				<li ng-repeat="item in contentList" ng-class="{active:($index == curItemIndex)}" >
-					<a href="" ng-click="showItem($index, 'saved')" >{{item.title}}</a>
+			<ul ng-show="bExpanded">
+				<li ng-repeat="item in bookList" ng-class="{active:($index == curItemIndex)}" >
+					<a href="" ng-click="showItem($index, 'saved')" >{{item.value.title}}</a>
 				</li>
 			</ul>	
 		</dd>
-	</dl>
-	<dl>
-		<dt>Movies</dt>
-		<dd></dd>
 	</dl>
 </div>

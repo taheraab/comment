@@ -2,7 +2,7 @@
 
 /* Comment app configuration */
 var app = angular.module('commentApp', 
-  ['mainServices', 'mainDirectives', 'mainControllers', 'contentServices', 
+  ['mainServices', 'mainDirectives', 'mainControllers', 'bookServices', 
     'myContentControllers', 'loginControllers', 'ngRoute', 'ngSanitize', 'ngAria']);
 
   

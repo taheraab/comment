@@ -2,20 +2,22 @@
 var myContentControllers = angular.module('myContentControllers', []);
 
 //Controller for handling content search results
-myContentControllers.controller('myContentController', ['$scope', '$location', '$http', 'books', 'notify',  
-  function($scope, $location, $http, books, notify) {
+myContentControllers.controller('myContentController', ['$scope', '$location', '$http', 'books', 'notify', 'userBooks',  
+  function($scope, $location, $http, books, notify, userBooks) {
     var searchObj = $location.search();
     $scope.curItemIndex = 0;
-    $scope.contentList = [];
+    $scope.bookList = [];
     $scope.unsavedContentList = {};
+    $scope.ucExpanded = $scope.bExpanded = true;
+    
     
     /**
      * Get all saved content for user
      */
     function initUserContent() {
-      $http.get('/bookService/getAll')
-      .success(function(items) {
-        $scope.contentList = items;
+      userBooks.getAll(function(items) {
+        $scope.bookList = items;
+        if ($scope.bookList.length) $scope.showItem(0, 'saved');
       });
       
     }
@@ -32,21 +34,17 @@ myContentControllers.controller('myContentController', ['$scope', '$location', '
             $scope.showItem(searchObj.volumeId, 'unsaved');
             $scope.$apply();
           });
-        }else {
-           $scope.showItem(searchObj.volumeId, 'unsaved');
-        }
-      } else {
-        $scope.showItem(Object.keys($scope.unsavedContentList)[0], 'unsaved');        
-        
+        }else $scope.showItem(searchObj.volumeId, 'unsaved');
+      }else {
+        if (Object.keys($scope.unsavedContentList).length) $scope.showItem(Object.keys($scope.unsavedContentList)[0], 'unsaved');        
       }
     }
     
     /**
     * Save book in database for given user
     */
-    $scope.save = function() {
-      $http.post('/bookService/addBook', $scope.item)
-      .success(function(res) {
+    $scope.save = function(i, type) {
+      userBooks.save(type, i, $scope.item, function(res) {
         if (res.result) notify.success(res.msg);
         else notify.error(res.msg);
       });
@@ -54,13 +52,17 @@ myContentControllers.controller('myContentController', ['$scope', '$location', '
  
     $scope.showItem = function(i, type) {
       if (type == 'saved') {
-        $scope.item = $scope.contentList[i];
+        userBooks.get(i, function(book) {
+          $scope.item = book.value;
+          console.log($scope.bookList);      
+        });
       }else {
         $scope.item = $scope.unsavedContentList[i];
       } 
         $scope.curItemIndex = i;
     };
     
+    initUserContent();
     initUnsavedContent();   
   }
 ]);

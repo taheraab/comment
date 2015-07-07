@@ -7,17 +7,35 @@ var bookModel = require('../models/books');
 /**
 * Insert a new book
 */ 
-router.post('/addBook', function(req, res, next) {
-  bookModel.addBook(req.session.user.id, req.body, function(result) {
+router.post('/add', function(req, res, next) {
+  bookModel.add(req.session.user.id, req.body, function(result) {
     res.send(result);
   });
 });
 
 /**
-* Get all books for this user
+* Update existing book
+*/ 
+router.post('/update', function(req, res, next) {
+  bookModel.update(req.session.user.id, req.body, function(result) {
+    res.send(result);
+  });
+});
+
+/**
+* Get all books titles for this user
 */
 router.get('/getAll', function(req, res, next) {
   bookModel.getAll(req.session.user.id, function(result) {
+    res.send(result);
+  });
+});
+
+/**
+* Get book detail
+*/
+router.get('/get/:id', function(req, res, next) {
+  bookModel.get(req.session.user.id, req.params.id, function(result) {
     res.send(result);
   });
 });

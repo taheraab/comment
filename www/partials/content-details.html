@@ -1,4 +1,8 @@
-<div id="contentDetail">
+<div id="contentDetail" ng-show="!item">
+  <p class="text-center">You do not have any saved or cached content</p>
+</div>
+
+<div id="contentDetail" ng-show="item">
   <div class="clearfix">
     <a ng-href="{{item.contentLink}}">
       <img class="pull-left thumbnail content-thumbnail" ng-src="{{item.thumbnailLink}}">
@@ -19,7 +23,7 @@
       <ul class="media-list" >
         <li class="media">
           <div class="media-left">
-            <img class="media-object" src="..." alt="...">
+            <img class="media-object" src="" alt="">
           </div>
           <div class="media-body">
             <h4 class="media-heading">Me</h4>
@@ -28,7 +32,7 @@
         </li>
         <li class="media">
           <div class="media-left">
-            <img class="media-object" src="..." alt="...">
+            <img class="media-object" src="" alt="">
           </div>
           <div class="media-body">
             <h4 class="media-heading">Me</h4>
