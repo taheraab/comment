@@ -2,13 +2,12 @@
 
 var express = require('express');
 var router = express.Router();
-var bookModel = require('../models/book');
+var bookModel = require('../models/books');
 
 /**
 * Insert a new book
 */ 
 router.post('/addBook', function(req, res, next) {
-  console.log(req.body);
   bookModel.addBook(req.session.user.id, req.body, function(result) {
     res.send(result);
   });

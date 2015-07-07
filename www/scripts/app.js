@@ -2,7 +2,8 @@
 
 /* Comment app configuration */
 var app = angular.module('commentApp', 
-  ['mainServices', 'mainDirectives', 'mainControllers', 'myContentControllers', 'loginControllers', 'ngRoute', 'ngSanitize', 'ngAria']);
+  ['mainServices', 'mainDirectives', 'mainControllers', 'contentServices', 
+    'myContentControllers', 'loginControllers', 'ngRoute', 'ngSanitize', 'ngAria']);
 
   
 app.config(['$routeProvider', '$httpProvider', 
@@ -29,5 +30,12 @@ app.config(['$routeProvider', '$httpProvider',
   }
 ]);
 
+app.run(['$rootScope', 
+  function($rootScope) {
+    $rootScope.Util = {
+      keys: Object.keys
+    };
+  }
+]);
 
 

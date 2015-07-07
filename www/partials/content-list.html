@@ -1,10 +1,18 @@
 <div id="contentList" >
 	<dl>
+		<dt>Unsaved Content ({{Util.keys(unsavedContentList).length}})</dt>
+		<dd>
+			<ul class="list-unstyled">
+				<li ng-repeat="(key, val) in unsavedContentList" ng-class = "{active:(key == curItemIndex)}">
+					<a href="" ng-click="showItem(key, 'unsaved')"><i>{{val.title}}</i></a>
+				</li>
+			</ul>
+		</dd>	
 		<dt>Books ({{contentList.length}})</dt>
 		<dd>
 			<ul class="list-unstyled">
 				<li ng-repeat="item in contentList" ng-class="{active:($index == curItemIndex)}" >
-					<a href="" ng-click="showItem($index)" >{{item.title}}</a>
+					<a href="" ng-click="showItem($index, 'saved')" >{{item.title}}</a>
 				</li>
 			</ul>	
 		</dd>

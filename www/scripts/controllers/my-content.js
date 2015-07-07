@@ -4,11 +4,15 @@ var myContentControllers = angular.module('myContentControllers', []);
 //Controller for handling content search results
 myContentControllers.controller('myContentController', ['$scope', '$location', '$http', 'books', 'notify',  
   function($scope, $location, $http, books, notify) {
+    var searchObj = $location.search();
+    $scope.curItemIndex = 0;
+    $scope.contentList = [];
+    $scope.unsavedContentList = {};
     
     /**
      * Get all saved content for user
      */
-    function initContentList() {
+    function initUserContent() {
       $http.get('/bookService/getAll')
       .success(function(items) {
         $scope.contentList = items;
@@ -17,16 +21,24 @@ myContentControllers.controller('myContentController', ['$scope', '$location', '
     }
     
     /**
-     * Init content details from selected source (from web or db)
+     * Init unsaved selected search items
      */
-    function init(id, source) {
-      var source = angular.isDefined(source)? source: 'web';
-      if (source == 'web') {
-        books.getBook(id, function(item) {
-          $scope.item = item;
-          $scope.$apply();
-        });
-      } 
+    function initUnsavedContent() {
+      $scope.unsavedContentList = books.getCachedBooks();
+      if (angular.isDefined(searchObj.volumeId)) {
+        if (Object.keys($scope.unsavedContentList).indexOf(searchObj.volumeId) == -1) {
+          books.cacheBook(searchObj.volumeId, function(cachedBooks) {
+            $scope.unsavedContentList = cachedBooks;
+            $scope.showItem(searchObj.volumeId, 'unsaved');
+            $scope.$apply();
+          });
+        }else {
+           $scope.showItem(searchObj.volumeId, 'unsaved');
+        }
+      } else {
+        $scope.showItem(Object.keys($scope.unsavedContentList)[0], 'unsaved');        
+        
+      }
     }
     
     /**
@@ -40,17 +52,15 @@ myContentControllers.controller('myContentController', ['$scope', '$location', '
       });
     };
  
-    $scope.showItem = function(i) {
-      $scope.item = $scope.contentList[i];
-      $scope.curItemIndex = i;  
+    $scope.showItem = function(i, type) {
+      if (type == 'saved') {
+        $scope.item = $scope.contentList[i];
+      }else {
+        $scope.item = $scope.unsavedContentList[i];
+      } 
+        $scope.curItemIndex = i;
     };
     
-    var searchObj = $location.search();
-    $scope.curItemIndex = -1;
-    
-    if (angular.isDefined(searchObj.volumeId)) {
-      init(searchObj.volumeId, 'web');
-    }
-    initContentList();
+    initUnsavedContent();   
   }
 ]);

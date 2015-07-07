@@ -2,8 +2,8 @@
 var mainControllers = angular.module('mainControllers', []);
 
 
-mainControllers.controller('mainController', ['$scope', '$location', 'googlePlusAPI', '$rootScope', '$http',
-  function($scope, $location, googleAPI, $rootScope, $http) {
+mainControllers.controller('mainController', ['$scope', '$location', 'googlePlusAPI', '$http',
+  function($scope, $location, googleAPI, $http) {
     $scope.user = googleAPI.getUser();
     
     $scope.signout = function() {
@@ -18,12 +18,13 @@ mainControllers.controller('mainController', ['$scope', '$location', 'googlePlus
     if (pathSegment != '') $scope.menuItem = pathSegment;
     
     //Check if user is signed in during each change of route
-    $rootScope.$on('$routeChangeStart', function(event, args) {
+    $scope.$on('$routeChangeStart', function(event, args) {
       if (angular.isDefined(args.$$route)) {
         if (args.$$route.originalPath != '/login') {
           $scope.menuItem = args.$$route.originalPath;
-          if (!$scope.user.signedIn) 
+          if (!googleAPI.getUser().signedIn) {
             $location.path('/login').replace();
+          }
         }
       }
     });
@@ -32,8 +33,8 @@ mainControllers.controller('mainController', ['$scope', '$location', 'googlePlus
 ]);
 
 //Controller for handling content search results
-mainControllers.controller('searchController', ['$scope', 'books', 
-  function($scope, books) {
+mainControllers.controller('searchController', ['$scope', 'books', '$location', 
+  function($scope, books, $location) {
     $scope.totalResults = books.getSearchResults();
     $scope.results = $scope.totalResults;
     $scope.query = books.getQueryText();
