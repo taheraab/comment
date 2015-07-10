@@ -71,7 +71,6 @@ mainServices.factory('googlePlusAPI', ['$rootScope', '$http', 'serverStatus',
             user.errMsg = authResult['error'];
             console.log('Google Signin error: ' + authResult['error']);
           }
-          console.log('authResult', authResult);
         });
       },
 
@@ -123,11 +122,12 @@ mainServices.factory('googlePlusAPI', ['$rootScope', '$http', 'serverStatus',
             $rootScope.$apply(function() {
               user.signedIn = true;
               user.profile = {
-              id: profile.id,
-              name: profile.displayName
+                id: profile.id,
+                name: profile.displayName,
+                imageUrl: profile.image.url
               };
             });  
-            console.log(user);
+            console.log(profile);
           }, function(err) {
             var error = err.result;
             console.log(error.message);

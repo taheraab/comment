@@ -3,12 +3,12 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var states = ['read', 'unread', 'new'];
 var commentSchema = new Schema({
-  byUserId: String,
+  userId: {type:String, required:"User ID not present"},
+  username: String,
+  userImageUrl: String,
   createdAt: {type: Date, default: Date.now},
-  content: String,
-  status: {type: String, enum: states},
+  content: String
 });
 
 module.exports = commentSchema;

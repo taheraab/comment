@@ -40,4 +40,13 @@ router.get('/get/:id', function(req, res, next) {
   });
 });
 
+/**
+ * Add comment to a book
+ */
+ router.post('/addComment', function(req, res, next) {
+   bookModel.addComment(req.session.user.id, req.body, function(result) {
+     res.send(result);
+   });  
+ });
+ 
 module.exports = router;

@@ -160,6 +160,9 @@ bookServices.factory('books',
           }else done(bookList[i]);
        },
        
+       /**
+        * Save a book to DB
+        */
        save: function(i, book, done) {
           if (book.commentApp.unsaved) { // this is a new book
             $http.post('/bookservice/add', book)
@@ -173,13 +176,27 @@ bookServices.factory('books',
             $http.post('/bookservice/update', {id: book._id, title:book.title})
             .success(function(res) {
                if (res.result) {
-                 bookList[i].value = res.book;
+                 bookList[i].value.title = res.book.title;
+                 bookList[i].value.updatedAt = res.book.updatedAt;
                }
                done(res);
             });
           }
-       }
+       },
        
+       /**
+        * Add a new comment
+        */
+       saveComment: function(i, book, done) {
+          $http.post('/bookservice/addComment', {bookId: book._id, comment:book.commentApp.comment})
+          .success(function(res) {
+             if (res.result) {
+               bookList[i].value.updatedAt = res.book.updatedAt;
+               bookList[i].value.comments.unshift(res.book.comment);
+             }
+             done(res);
+          });         
+       }
      }; 
    }
  ]);

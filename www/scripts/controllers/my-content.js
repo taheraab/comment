@@ -2,8 +2,8 @@
 var myContentControllers = angular.module('myContentControllers', []);
 
 //Controller for handling content search results
-myContentControllers.controller('myContentController', ['$scope', '$location', '$http', 'books', 'notify', 'userBooks',  
-  function($scope, $location, $http, books, notify, userBooks) {
+myContentControllers.controller('myContentController', ['$scope', '$location', '$http', 'books', 'notify', 'userBooks','googlePlusAPI',  
+  function($scope, $location, $http, books, notify, userBooks, googleAPI) {
     var searchObj = $location.search();
     $scope.curItemIndex = 0;
     $scope.bookList = [];
@@ -52,14 +52,52 @@ myContentControllers.controller('myContentController', ['$scope', '$location', '
           if (unsaved) { //if new book was added
             $scope.showItem(0, 'saved');
             delete $scope.unsavedContentList[curId];
-            console.log($scope.unsavedContentList);
-            console.log($scope.bookList);
+          }else {
+            $scope.item.commentApp.editMode = false;
           }
         }
         else notify.error(res.msg);
       });
     };
- 
+
+    /**
+     * Save comment for current item 
+     */ 
+    $scope.saveComment = function() {
+      userBooks.saveComment($scope.curItemIndex, $scope.item, function(res) {
+        if (res.result) {
+          notify.success(res.msg);
+          $scope.cancelCommentEdit();
+        }else notify.error(res.msg);
+      });
+    };
+    
+    /**
+     * Start editing a new comment
+     */
+    $scope.startCommentEdit = function() {
+      var user = googleAPI.getUser();
+      //initialize new comment
+      $scope.item.commentApp.comment = {
+        userId: user.profile.id,
+        username: user.profile.name,
+        userImageUrl: user.profile.imageUrl
+      };
+      $scope.item.commentApp.commentEditMode = true;
+    }
+    
+    /**
+     * Cancel comment editing
+     */
+    $scope.cancelCommentEdit = function() {
+      //initialize new comment
+      delete $scope.item.commentApp.comment;
+      $scope.item.commentApp.commentEditMode = false;
+    }
+     
+    /**
+     * Display selected content item
+     */
     $scope.showItem = function(i, type) {
       if (type == 'saved') {
         userBooks.get(i, function(book) {

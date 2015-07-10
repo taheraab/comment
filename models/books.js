@@ -85,7 +85,35 @@ exports.add = function(userId, bookObj, done) {
         console.log(err);
         done({result: false, msg: err});
       }
-      done({result: true, book: book, msg: 'Updated book: ' + book.title + ' successfully'});    
+      done({result: true, book: {updatedAt:book.updatedAt, title: book.title}, msg: 'Updated book: ' + book.title + ' successfully'});    
     });
   }); 
  }
+ 
+ /**
+  * Add comment to a book
+  */
+  exports.addComment = function(userId, obj, done) {
+    bookModel.findById(obj.bookId)
+    .where('userId', userId)
+    .exec(function(err, book) {
+      if (err) {
+        console.log(err);
+        done({result: false, msg:err});
+      }
+      book.comments.unshift({
+        userId: obj.comment.userId,
+        username: obj.comment.username,
+        userImageUrl: obj.comment.userImageUrl,
+        content: obj.comment.content
+      });
+      book.updatedAt = Date.now();
+      book.save(function(err) {
+        if (err) {
+          console.log(err);
+          done({result: false, msg: err});
+        }
+        done({result: true, book: {updatedAt: book.updatedAt, comment: book.comments[0]}, msg: 'Updated book: ' + book.title + ' successfully'});    
+      });     
+    });
+  }
