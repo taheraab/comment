@@ -158,23 +158,22 @@ bookServices.factory('books',
                done(bookList[i]);
             });
           }else done(bookList[i]);
-          console.log(bookList);
        },
        
-       save: function(type, i, book, done) {
-          if (type == 'unsaved') { // this is a new book
+       save: function(i, book, done) {
+          if (book.commentApp.unsaved) { // this is a new book
             $http.post('/bookservice/add', book)
             .success(function(res) {
               if (res.result) {
-                bookList.push({type:'detail', value: book});
+                bookList.unshift({type:'detail', value: res.book});
               }
                done(res);
             });
           }else {
-            $http.post('/bookservice/update', book)
+            $http.post('/bookservice/update', {id: book._id, title:book.title})
             .success(function(res) {
                if (res.result) {
-                 bookList[i].value = book;
+                 bookList[i].value = res.book;
                }
                done(res);
             });

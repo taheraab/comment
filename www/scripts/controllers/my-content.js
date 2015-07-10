@@ -43,9 +43,19 @@ myContentControllers.controller('myContentController', ['$scope', '$location', '
     /**
     * Save book in database for given user
     */
-    $scope.save = function(i, type) {
-      userBooks.save(type, i, $scope.item, function(res) {
-        if (res.result) notify.success(res.msg);
+    $scope.save = function() {
+      var unsaved = $scope.item.commentApp.unsaved;
+      var curId = $scope.curItemIndex;
+      userBooks.save($scope.curItemIndex, $scope.item, function(res) {
+        if (res.result) {
+          notify.success(res.msg);
+          if (unsaved) { //if new book was added
+            $scope.showItem(0, 'saved');
+            delete $scope.unsavedContentList[curId];
+            console.log($scope.unsavedContentList);
+            console.log($scope.bookList);
+          }
+        }
         else notify.error(res.msg);
       });
     };
@@ -54,10 +64,11 @@ myContentControllers.controller('myContentController', ['$scope', '$location', '
       if (type == 'saved') {
         userBooks.get(i, function(book) {
           $scope.item = book.value;
-          console.log($scope.bookList);      
+          $scope.item.commentApp = {unsaved: false};     
         });
       }else {
         $scope.item = $scope.unsavedContentList[i];
+        $scope.item.commentApp = {unsaved: true};
       } 
         $scope.curItemIndex = i;
     };

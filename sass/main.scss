@@ -41,6 +41,10 @@ $float-spacing: 15px;
   display: none;
 }
 
+.content-list {
+  padding-left: 1.5em;
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   /* Remove the padding we set earlier */

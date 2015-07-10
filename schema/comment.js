@@ -6,7 +6,7 @@ var Schema = mongoose.Schema;
 var states = ['read', 'unread', 'new'];
 var commentSchema = new Schema({
   byUserId: String,
-  createdAt: {type: Date, default: new Date()},
+  createdAt: {type: Date, default: Date.now},
   content: String,
   status: {type: String, enum: states},
 });

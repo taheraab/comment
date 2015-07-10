@@ -4,7 +4,7 @@
 			<span class="glyphicon" ng-class="{'glyphicon-collapse-up': ucExpanded, 'glyphicon-collapse-down': !ucExpanded}" />
 				Unsaved Content ({{Util.keys(unsavedContentList).length}})</a></dt>
 		<dd>
-			<ul ng-show="ucExpanded">
+			<ul class="content-list" ng-show="ucExpanded">
 				<li ng-repeat="(key, val) in unsavedContentList" ng-class = "{active:(key == curItemIndex)}">
 					<a href="" ng-click="showItem(key, 'unsaved')"><i>{{val.title}}</i></a>
 				</li>
@@ -14,7 +14,7 @@
 			<span class="glyphicon" ng-class="{'glyphicon-collapse-up': bExpanded, 'glyphicon-collapse-down': !bExpanded}" />
 			Books ({{bookList.length}})</a></dt>
 		<dd>
-			<ul ng-show="bExpanded">
+			<ul class="content-list" ng-show="bExpanded">
 				<li ng-repeat="item in bookList" ng-class="{active:($index == curItemIndex)}" >
 					<a href="" ng-click="showItem($index, 'saved')" >{{item.value.title}}</a>
 				</li>

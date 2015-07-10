@@ -17,8 +17,8 @@ var bookSchema = new Schema({
   categories: String,
   pageCount: String,
   comments: [commentSchema],
-  createdAt: {type: Date, default: new Date()},
-  updatedAt: {type: Date, default: new Date()},
+  createdAt: {type: Date, default: Date.now},
+  updatedAt: {type: Date, default: Date.now},
   userId: {type: String, required: 'UserId not present'},
   sharedWith: [String]
 });

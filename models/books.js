@@ -12,7 +12,7 @@ var bookModel = mongoose.model('Book', bookSchema);
 */
 exports.getAll = function(userId, done) {
   bookModel.find({userId: userId})
-  .sort('-createdAt')
+  .sort('-updatedAt')
   .select('_id title')
   .exec(function(err, res) {
     if (err) {
@@ -27,35 +27,65 @@ exports.getAll = function(userId, done) {
 * Return complete book record for given id
 */
 exports.get = function(userId, id, done) {
-  bookModel.find({userId: userId})
-  .where('_id').equals(id)
+  bookModel.findById(id)
+  .where('userId', userId)
   .exec(function(err, res) {
     if (err) {
       console.log(err);
       done({});
     }
-    done(res[0]);
+    done(res);
   });
 };
 
 /**
 * Add a book for a given user
 */
-exports.add = function(userId, book, done) {
-  var book = new bookModel(book);
-  book.userId = userId;
-  book.save(function(err, res) {
+exports.add = function(userId, bookObj, done) {
+  var book = new bookModel({
+    id: bookObj.id,
+    title: bookObj.title,
+    description: bookObj.description,
+    rating: bookObj.rating,
+    publishedBy: bookObj.publishedBy,
+    publishedDate: bookObj.publishedDate,
+    authors: bookObj.authors,
+    thumbnailLink: bookObj.thumbnailLink,
+    contentLink: bookObj.contentLink,
+    categories: bookObj.categories,
+    pageCount: bookObj.pageCount,
+    comments: bookObj.comments,
+    userId: userId,
+    sharedWith: bookObj.sharedWith  
+  });
+  book.save(function(err) {
     if (err) {
       console.log(err);
       done({result: false, msg: err});
     }
-    done({result: true, msg: 'Inserted book: ' + book.title + ' successfully'});
+    done({result: true, book: book, msg: 'Inserted book: ' + book.title + ' successfully'});
   });
 };
 
 /**
  * Update book title
  */
- exports.update = function(userId, book, done) {
-   
+ exports.update = function(userId, bookObj, done) {
+  bookModel.findById(bookObj.id)
+  .where('userId', userId)
+  .exec(function(err, book) {
+    if (err) {
+      console.log(err);
+      done({result: false, msg:err});
+    }
+    book.title = bookObj.title;
+    book.updatedAt = Date.now();
+    book.save(function(err) {
+      if (err) {
+        console.log(err);
+        done({result: false, msg: err});
+      }
+      done({result: true, book: book, msg: 'Updated book: ' + book.title + ' successfully'});    
+    });
+  }); 
  }
