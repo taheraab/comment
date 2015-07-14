@@ -60,6 +60,13 @@ body {
 #contentDetail .content-summary {
   margin-left: 15px;
   margin-bottom: 15px; }
+#contentDetail .comment-text {
+  background-color: white;
+  border: 0;
+  padding: 0; }
+#contentDetail .user-thumbnail {
+  height: 30px;
+  width: 30px; }
 
 #salutation {
   margin-bottom: 5px; }
@@ -71,7 +78,9 @@ body {
   display: none; }
 
 .content-list {
-  padding-left: 1.5em; }
+  padding-left: 1.5em;
+  max-height: 40em;
+  overflow-y: auto; }
 
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {

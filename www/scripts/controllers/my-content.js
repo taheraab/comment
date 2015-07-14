@@ -102,7 +102,8 @@ myContentControllers.controller('myContentController', ['$scope', '$location', '
       if (type == 'saved') {
         userBooks.get(i, function(book) {
           $scope.item = book.value;
-          $scope.item.commentApp = {unsaved: false};     
+          $scope.item.commentApp = {unsaved: false};
+          console.log($scope.item.comments);     
         });
       }else {
         $scope.item = $scope.unsavedContentList[i];

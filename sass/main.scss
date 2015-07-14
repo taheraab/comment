@@ -24,7 +24,15 @@ $float-spacing: 15px;
     margin-left: $float-spacing;
     margin-bottom: $float-spacing;
   }
- 
+  .comment-text {
+    background-color: white;
+    border: 0;
+    padding: 0;
+  }
+  .user-thumbnail {
+    height: 30px;
+    width: 30px;
+  }
 }
 
 .page-content {
@@ -44,6 +52,8 @@ $float-spacing: 15px;
 
 .content-list {
   padding-left: 1.5em;
+  max-height: 40em;
+  overflow-y: auto;
 }
 
 /* Responsive: Portrait tablets and up */

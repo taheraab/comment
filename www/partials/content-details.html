@@ -29,24 +29,26 @@
   <div ng-if="!item.commentApp.unsaved" class="panel panel-default">
     <div class="panel-heading">Comments</div>
     <div class="panel-body">
-      <p class="text-center" ng-if="!item.comments.length">There are no comments for this item</p>
+      <p class="text-center" ng-if="!item.comments.length">There are no comments for this item.</p>
       <ul ng-if="item.comments.length" class="media-list" >
         <li  ng-repeat="comment in item.comments" class="media">
           <div class="media-left">
-            <img class="media-object" ng-src="{{comment.userImageUrl}}" alt="user thumbnail">
+            <img class="media-object user-thumbnail" ng-src="{{comment.userImageUrl}}" alt="user thumbnail">
           </div>
           <div class="media-body">
-            <div class="media-heading"><strong>{{comment.username}}</strong></div>
-            <p> {{comment.content}}</p>
+              <h5 class="media-heading"><strong>{{comment.username}}</strong> <br/>
+              <small>{{comment.createdAt | date:'short'}}</small>
+              </h5>
+            <pre class="comment-text"> {{comment.content}}</pre>
           </div>
         </li>
         <li ng-show="item.commentApp.commentEditMode" class="media">
           <div class="media-left">
-            <img class="media-object" ng-src="{{item.commentApp.comment.userImageUrl}}" alt="user thumbnail">
+            <img class="media-object user-thumbnail" ng-src="{{item.commentApp.comment.userImageUrl}}" alt="user thumbnail">
           </div>
           <div class="media-body">
-            <div class="media-heading"><strong>{{item.commentApp.comment.username}}</strong></div>
-            <textarea style="width:100%;" rows="5" ng-model="item.commentApp.comment.content"> </textarea>
+            <h5 class="media-heading"><strong>{{item.commentApp.comment.username}}</strong></h5>
+            <textarea class="form-control" style="width:100%;" rows="5" ng-model="item.commentApp.comment.content"> </textarea>
             <div class="toolbar pull-right"> 
               <button class="btn btn-sm btn-success" ng-disabled="!item.commentApp.comment.content" ng-click="saveComment()">Save</button>
               <button class="btn btn-sm btn-success" ng-click="cancelCommentEdit()">Cancel</button>
