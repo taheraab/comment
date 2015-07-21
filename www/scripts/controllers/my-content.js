@@ -2,8 +2,8 @@
 var myContentControllers = angular.module('myContentControllers', []);
 
 //Controller for handling content search results
-myContentControllers.controller('myContentController', ['$scope', '$location', '$http', 'books', 'notify', 'userBooks','googlePlusAPI',  
-  function($scope, $location, $http, books, notify, userBooks, googleAPI) {
+myContentControllers.controller('myContentController', ['$scope', '$location', 'books', 'notify', 'userBooks','googlePlusAPI',  
+  function($scope, $location, books, notify, userBooks, googleAPI) {
     var searchObj = $location.search();
     $scope.curItemIndex = 0;
     $scope.bookList = [];
@@ -40,6 +40,37 @@ myContentControllers.controller('myContentController', ['$scope', '$location', '
       }
     }
     
+     
+    /**
+     * Display selected content item
+     */
+    $scope.showItem = function(i, type) {
+      if (type == 'saved') {
+        userBooks.get(i, function(book) {
+          $scope.item = book.value;
+          $scope.item.commentApp = {unsaved: false};
+          console.log($scope.item.comments);     
+        });
+      }else {
+        $scope.item = $scope.unsavedContentList[i];
+        $scope.item.commentApp = {unsaved: true};
+      } 
+        $scope.curItemIndex = i;
+    };
+         
+    initUserContent();
+    initUnsavedContent();   
+  }
+]);
+
+/**
+ *  Controller that handles content detail view
+ */
+ myContentControllers.controller('contentDetailController', ['$scope', 'notify', 'userBooks', 'googlePlusAPI',
+   function($scope, notify, userBooks, googleAPI) {
+     var user = googleAPI.getUser();
+     $scope.shareDialogId = "shareContentDialog";
+     
     /**
     * Save book in database for given user
     */
@@ -76,7 +107,6 @@ myContentControllers.controller('myContentController', ['$scope', '$location', '
      * Start editing a new comment
      */
     $scope.startCommentEdit = function() {
-      var user = googleAPI.getUser();
       //initialize new comment
       $scope.item.commentApp.comment = {
         userId: user.profile.id,
@@ -94,25 +124,15 @@ myContentControllers.controller('myContentController', ['$scope', '$location', '
       delete $scope.item.commentApp.comment;
       $scope.item.commentApp.commentEditMode = false;
     }
-     
-    /**
-     * Display selected content item
-     */
-    $scope.showItem = function(i, type) {
-      if (type == 'saved') {
-        userBooks.get(i, function(book) {
-          $scope.item = book.value;
-          $scope.item.commentApp = {unsaved: false};
-          console.log($scope.item.comments);     
-        });
-      }else {
-        $scope.item = $scope.unsavedContentList[i];
-        $scope.item.commentApp = {unsaved: true};
-      } 
-        $scope.curItemIndex = i;
-    };
     
-    initUserContent();
-    initUnsavedContent();   
-  }
-]);
+   }
+ ]);
+ 
+ /**
+  * Controller to handle share dialog
+  */
+  myContentControllers.controller('shareDialogController', ['$scope', 
+    function($scope) {
+      
+    }
+  ]);

@@ -106,8 +106,13 @@ mainServices.factory('googlePlusAPI', ['$rootScope', '$http', 'serverStatus',
           'userId': 'me',
           'collection': 'visible'
         }).then(function(res) {
-          var people = res.result;
+            var people = res.result;
             console.log(people);
+            if (user.profile) {
+              user.profile.friends = [
+                  
+              ];
+            }
         });
       },
 
